@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+	<meta charset="UTF-8">
+	<title>Diary</title>
+	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
+	<script
+	  src="https://code.jquery.com/jquery-3.1.1.min.js"
+	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	  crossorigin="anonymous"></script>
+	<script src="./src/js/bootstrap.min.js"></script>
+	<script src="./ckeditor/ckeditor.js"></script>
+
+
+	<style>
+		#submit { float:right; }
+		#editor1 {
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+</head>
+<body>
+
+
+<div class="container">
+	<div class="alert alert-success alert-dismissible" role="alert" style="margin: 20px; display:none;">
+	  <button type="button" class="close">
+	    <span aria-hidden="true">&times;</span>
+	  </button>
+	  <strong>Congratulations!</strong> Your message has been submitted</a>.
+	</div>
+
+	<div class="alert2 alert-success alert-dismissible" role="alert" style="margin: 20px; display:none;">
+	  <button type="button" class="close">
+	    <span aria-hidden="true">&times;</span>
+	  </button>
+	  <strong>Congratulations!</strong> Your message has been revised</a>.
+	</div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#1" aria-controls="1" role="tab" data-toggle="tab">Home</a></li>
+    <li role="presentation"><a href="#2" aria-controls="2" role="tab" data-toggle="tab">Write</a></li>
+    <li role="presentation"><a href="#3" aria-controls="3" role="tab" data-toggle="tab" onclick="alignJSON()">View</a></li>
+    <li role="presentation"><a href="#4" aria-controls="4" role="tab" data-toggle="tab">Edit</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="1">
+		<section class="jumbotron text-center">
+	      <div class="container">
+	        <h1 class="jumbotron-heading">Evernote-like page</h1>
+	        <p class="lead text-muted">CKEditor를 이용해서 메모장페이지를 만들었습니다. 상단 탭을 이용해서 기능을 수행할 수 있습니다.</p>
+	      </div>
+	    </section>
+
+
+    </div>
+
+
+    <div role="tabpanel" class="tab-pane" id="2">
+    	<form>
+	    	<h2>CKEditor</h2>
+	    	<h4>Title</h4>
+	    	<input id="text_title" type="text" class="form-control">
+			<textarea name="editor1" id="editor1" rows="10" cols="80">
+				Please type here
+			</textarea>	
+
+			<br/>
+			<h2>File Upload</h2>
+			<!-- <label class="control-label">Select File</label> -->
+			<input id="input-1" type="file" class="file">
+
+
+			<br/>			
+			<h2>Hashtag</h2>
+			
+			<div class="form-group">
+				<input id="hashtag" type="text" class="form-control" placeholder="type here">
+			</div>
+
+			<br/>
+			<button type="button" id="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				Submit
+			</button>
+		</form>
+    </div>
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Proceed?</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        Are you sure you want to save the current document?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" onclick="submitDocument()">Save</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+    <div role="tabpanel" class="tab-pane" id="3">
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Text</th>
+					<th>Attachment</th>
+					<th>Hashtag</th>
+					<th>Timestamp</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="4">
+    	<form>
+	    	<h2>CKEditor</h2>
+
+	    	<h4>Title</h4>
+	    	<input id="text_title2" type="text" class="form-control">
+			<textarea name="editor2" id="editor2" rows="10" cols="80">
+				Please type here
+			</textarea>	
+
+			<br/>
+			<h2>File Upload</h2>
+			<!-- <label class="control-label">Select File</label> -->
+			<input id="input-2" type="file" class="file">
+
+
+			<br/>			
+			<h2>Hashtag</h2>
+			
+			<div class="form-group">
+				<input id="hashtag2" type="text" class="form-control" placeholder="type here">
+			</div>
+
+			<br/>
+			<button type="button" id="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">
+				Edit
+			</button>
+		</form>
+
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Proceed?</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        Are you sure you want to edit the current document?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-danger" onclick="deleteDocument()">Delete</button>
+	        <button type="button" class="btn btn-primary" onclick="editDocument()">Save</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+
+
+    </div>
+  </div>
+
+</div>
+	<!-- Firebase Auth -->
+	<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyAaE1LoTaD5xOXii6_oNR71JgjsG0fFumc",
+			authDomain: "webprogramming-55c29.firebaseapp.com",
+			databaseURL: "https://webprogramming-55c29.firebaseio.com",
+			projectId: "webprogramming-55c29",
+			storageBucket: "webprogramming-55c29.appspot.com",
+			messagingSenderId: "434509859042"
+		};
+		firebase.initializeApp(config);
+
+
+		// Create a storage reference from our storage service
+		var storageRef = firebase.storage().ref();
+
+
+	</script>
+
+	
+	<script>
+	var id = "";
+	var obj = $.getJSON("https://webprogramming-55c29.firebaseio.com/project.json");
+
+	$( document ).ready(function() {
+		CKEDITOR.replace( 'editor1' );
+		CKEDITOR.replace( 'editor2' );
+
+	});
+	
+	$(".close").click(function() {
+		$(".alert").css("display", "none");
+	});
+
+	function submitDocument() {
+		// if attachment exists
+		if($("#input-1")[0].files.length != 0) {
+			var param = {
+				"topic" : $("#text_title").val(),
+				"text" : CKEDITOR.instances.editor1.getData(),
+				"attachment" : $("#input-1")[0].files[0].name,
+				"hashtag" : $("#hashtag").val(),
+				"timestamp" : $.now()
+			};
+
+			// upload file via Firebase
+			var NameRef = storageRef.child($("#input-1")[0].files[0].name);
+			var PathNameRef = storageRef.child('attachment/' + $("#input-1")[0].files[0].name);
+			PathNameRef.put($("#input-1")[0].files[0]).then(function(snapshot) {
+	  			console.log('Uploaded a blob or file!');
+		});
+		}
+
+		else {
+			var param = {
+				"topic" : $("#text_title").val(),
+				"text" : CKEDITOR.instances.editor1.getData(),
+				"hashtag" : $("#hashtag").val(),
+				"timestamp" : $.now()
+			};			
+		}
+
+		$.ajax({
+			url: "https://webprogramming-55c29.firebaseio.com/project.json",
+			method: "POST",
+			data: JSON.stringify(param)
+		});
+		console.log(param);
+
+
+
+		$('#myModal').modal('hide');
+		$(".alert").show();
+		$('li a[href*="#3"]').trigger('click');
+	}
+
+	function editDocument() {
+		// if attachment exists
+		if($("#input-2")[0].files.length != 0) {
+			var param = {
+				"topic" : $("#text_title2").val(),				
+				"text" : CKEDITOR.instances.editor2.getData(),
+				"attachment" : $("#input-2")[0].files[0].name,
+				"hashtag" : $("#hashtag2").val(),
+				"timestamp" : $.now()
+			};
+
+			// upload file via Firebase
+			var NameRef = storageRef.child($("#input-2")[0].files[0].name);
+			var PathNameRef = storageRef.child('attachment/' + $("#input-2")[0].files[0].name);
+			PathNameRef.put($("#input-2")[0].files[0]).then(function(snapshot) {
+	  			console.log('Uploaded a blob or file!');
+			});
+
+		}
+
+		else {
+			var param = {
+				"text" : CKEDITOR.instances.editor2.getData(),
+				"hashtag" : $("#hashtag2").val(),
+				"timestamp" : $.now()
+			};			
+		}
+
+		$.ajax({
+			url: "https://webprogramming-55c29.firebaseio.com/project/" + id + ".json",
+			method: "PUT",
+			data: JSON.stringify(param)
+		});
+
+		$('#myModal2').modal('hide');
+		$(".alert2").show();
+		var obj = $.getJSON("https://webprogramming-55c29.firebaseio.com/project.json");
+		$('li a[href*="#3"]').trigger('click');
+	}
+
+	function deleteDocument() {
+		$.ajax({
+			url: "https://webprogramming-55c29.firebaseio.com/project/" + id + ".json",
+			method: "DELETE"
+		});
+		$('#myModal2').modal('hide');
+		$(".alert2").show();
+		var obj = $.getJSON("https://webprogramming-55c29.firebaseio.com/project.json");
+		$('li a[href*="#3"]').trigger('click');
+	}
+	function alignJSON() {
+		// JSON Mgmt.
+
+		// convert JSON to JS array
+		$(".table tbody").empty()
+		
+		var arr = $.map(obj.responseJSON, function(el) { return el });
+
+
+		// sort JSON via timestamp
+		function comp(b, a) {
+    		return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+		}
+		arr.sort(comp);
+
+		idx = 1;
+
+		$.each(arr, function() {
+
+			//retain each text's key
+			$.each(obj.responseJSON, function(k) {
+				// console.log("This.timestamp = " + this.timestamp);
+				// console.log("obj.responseJSON[k].timestamp = " + obj.responseJSON[k].timestamp);
+				if(obj.responseJSON[k].timestamp == this.timestamp) {
+					// console.log(obj.responseJSON[k].text + "'s ID = " + k);
+					this.id = k;
+				}
+			});
+
+
+			// append HTML
+			var input = ('<tr>' + "<td>" + this.topic + "</td><td>" + '<a href="#" class="innertext" id="' + this.id + '">' + this.text.replace(/(<p[^>]+?>|<p>|<\/p>)/img, "") + "</td><td id=file" + idx + ">" + this.attachment + "</td><td class='hash'><a href='#'>" + this.hashtag + "</td><td>" + new Date(this.timestamp) + "</td></tr>");
+
+			$(".table tbody").append(input);
+
+			if($("#file" + idx)[0].innerHTML != "undefined") {
+				// create download link
+				var storage = firebase.storage().ref();
+				storage.child('attachment/' + this.attachment).getDownloadURL().then(function(url) {
+				  // This can be downloaded directly:
+				  // Or inserted into an <img> element:
+				  $("#file" + idx).wrap('<a href="' + url + '"/>' );
+				  // $("#file" + idx).attr('href', url);
+				  console.log(url);
+				}).catch(function(error) {
+				  // Handle any errors
+				  console.log("no file");
+				});	
+			}
+			
+
+			idx += 1;
+
+
+
+		});
+
+		$(".innertext").click(function() {
+			id = this.id;
+			console.log(id);
+
+			$('li a[href*="#4"]').trigger('click');
+			$("#text_title2").val(obj.responseJSON[id].topic);
+			CKEDITOR.instances.editor2.setData(obj.responseJSON[id].text);
+		});
+
+		$(".hash").click(function() {
+			console.log("HASHTAG = " + this.innerText);
+
+			findHash(this.innerText);
+
+		});
+
+	}
+
+	function findHash(hash) {
+		
+		$(".table").prepend("<h2>Hashtag search for result for <b>" + hash + "</b> is shown</h2>");
+
+		// convert JSON to JS array
+		$(".table tbody").empty()
+		
+		var arr = $.map(obj.responseJSON, function(el) { return el });
+
+
+		// sort JSON via timestamp
+		function comp(b, a) {
+    		return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+		}
+		arr.sort(comp);
+
+		idx = 1;
+
+		$.each(arr, function() {
+
+			//retain each text's key
+			$.each(obj.responseJSON, function(k) {
+				// console.log("This.timestamp = " + this.timestamp);
+				// console.log("obj.responseJSON[k].timestamp = " + obj.responseJSON[k].timestamp);
+				if(obj.responseJSON[k].timestamp == this.timestamp) {
+					// console.log(obj.responseJSON[k].text + "'s ID = " + k);
+					this.id = k;
+				}
+			});
+
+			if(this.hashtag == hash) {
+				// append HTML
+				var input = ('<tr>' + "<td>" + this.topic + "</td><td>" + '<a href="#" class="innertext" id="' + this.id + '">' + this.text.replace(/(<p[^>]+?>|<p>|<\/p>)/img, "") + "</td><td id=file" + idx + ">" + this.attachment + "</td><td class='hash'><a href='#'>" + this.hashtag + "</td><td>" + new Date(this.timestamp) + "</td></tr>");
+
+				$(".table tbody").append(input);
+
+				if($("#file" + idx)[0].innerHTML != "undefined") {
+					// create download link
+					var storage = firebase.storage().ref();
+					storage.child('attachment/' + this.attachment).getDownloadURL().then(function(url) {
+					  // This can be downloaded directly:
+					  // Or inserted into an <img> element:
+					  $("#file" + idx).wrap('<a href="' + url + '"/>' );
+					  // $("#file" + idx).attr('href', url);
+					  console.log(url);
+					}).catch(function(error) {
+					  // Handle any errors
+					  console.log("no file");
+					});	
+				}
+				
+
+				idx += 1;
+			}	
+
+
+		});
+	}
+	</script>
+</body>
+</html>
